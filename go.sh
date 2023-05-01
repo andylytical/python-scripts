@@ -20,15 +20,29 @@ function latest_tag {
 }
 
 
+function is_windows {
+  rv=1
+  [[ -n "$USERPROFILE" ]] && rv=0
+  return $rv
+}
+
+
 [[ "$DEBUG" -eq 1 ]] && set -x
 
-tag=$(latest_tag)
-exit 1
+# tag=$(latest_tag)
+# exit 1
+tag=latest
 
-docker run -it --pull always \
---mount type=bind,src=$HOME,dst=/home \
--e JIRA_SERVER=jira.ncsa.illinois.edu \
--e JIRA_PROJECT=SVCPLAN \
---entrypoint "/bin/bash" \
-$REGISTRY/$REPO:$tag
+action=''
+src_home="$HOME"
+if is_windows ; then
+  action=winpty
+  src_home="$USERPROFILE"
+fi
+
+$action docker run -it --pull always \
+--mount type=bind,src="${src_home}",dst=/home \
+--cap-add SYS_ADMIN \
+--cap-add DAC_READ_SEARCH \
+$REGISTRY/$OWNER/$REPO:$tag
 
