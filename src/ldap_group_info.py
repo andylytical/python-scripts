@@ -8,7 +8,8 @@ ldap_password = None
 
 search_base = 'dc=ncsa,dc=illinois,dc=edu'
 search_scope = ldap3.SUBTREE
-attributes = ["description", "gidNumber", "businessCategory", "owner"]
+#attributes = ldap3.ALL_ATTRIBUTES
+attributes = ["description", "gidNumber", "businessCategory", "owner", "member"]
 
 group_list = [
     'caiiwp ',
@@ -42,4 +43,4 @@ with ldap3.Connection(ldap_server, ldap_user, ldap_password) as conn:
                 # print(f"GID number: {entry.gidNumber}")
                 # print(f"Business category: {entry.businessCategory}")
                 print(f"Owner: {entry.owner}")
-
+                print(f"Members: {entry.member}")
