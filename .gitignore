@@ -2,6 +2,8 @@
 music/
 *.fpl
 *.m3u*
+*.out
+out
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -1,4 +1,5 @@
 import ldap3
+import pprint
 
 ldap_server = "ldaps://ldap1.ncsa.illinois.edu"  # Replace with your LDAP server
 # ldap_user = "cn=admin,dc=example,dc=com"  # Replace with your LDAP admin user
@@ -26,10 +27,11 @@ with ldap3.Connection(ldap_server, ldap_user, ldap_password) as conn:
                 print(f"Error: Could not find group {group_name}")
             else:
                 entry = conn.entries[0]
-                print(f"Group: {group_name}")
-                print(f"Description: {entry.description}")
-                print(f"GID number: {entry.gidNumber}")
-                print(f"Business category: {entry.businessCategory}")
-                print(f"Owner: {entry.owner}")
-                members = [ m.split(',')[0].split('=')[1] for m in entry.uniqueMember ]
-                print(f"Members: {members}")
+                pprint.pprint( entry )
+                # print(f"Group: {group_name}")
+                # print(f"Description: {entry.description}")
+                # print(f"GID number: {entry.gidNumber}")
+                # print(f"Business category: {entry.businessCategory}")
+                # print(f"Owner: {entry.owner}")
+                # members = [ m.split(',')[0].split('=')[1] for m in entry.uniqueMember ]
+                # print(f"Members: {members}")
